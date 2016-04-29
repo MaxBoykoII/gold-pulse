@@ -1,0 +1,63 @@
+<!doctype html >
+<html lang="en">
+
+<head>
+  <title>Gold Pulse</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body ng-app="GoldPulse" ng-controller="TableCtrl">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">
+                Stock Table
+            </h1>
+      <h3 class="text-center">
+                Resize the browser screen to see how the table changes
+            </h3>
+    </div>
+    <div class="container well col-md-12" id="no-more-tables">
+
+      <table class="table table-bordered table-striped table-condensed">
+        <thread>
+          <tr>
+            <td> name</td>
+            <td> ticker </td>
+            <td ng-repeat="metric in metrics">{{metric}}</td>
+            <td ng-repeat="ymd in dates">{{ymd}}</td>
+          </tr>
+        </thread>
+        <tbody>
+          <tr ng-repeat="stock in stocks">
+            <td> {{stock.name}}</td>
+            <td> {{stock.ticker}}</td>
+            <td ng-repeat="metric in metrics">{{stock.metrics[metric]}}</td>
+            <td ng-repeat="ymd in dates">{{stock.dates| match : ymd}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Javascript libraries -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js"></script>
+    <!-- App  Modules -->
+    <script src="/js/app/app.js"></script>
+
+    <!-- App Filters -->
+    <script src="/js/app/filters/match.js"></script>
+
+    <!-- App services -->
+    <script src="/js/app/services/cleaning-service.js"></script>
+    <script src="/js/app/services/quote-service.js"></script>
+
+    <!-- App controllers -->
+    <script src="/js/app/controllers/table.js"></script>
+
+</body>
+
+</html>

@@ -9,8 +9,8 @@ var http = require('http'),
 app.use(express.static(path.resolve(__dirname, 'client')));
 
 app.get('/api', function(req, res) {
-  var m0 = req.query.m0,
-    query = 'm0=' + m0,
+  var m = req.query.m,
+    query = 'm=' + m,
     requestUrl = baseUrl + query;
 
   request({

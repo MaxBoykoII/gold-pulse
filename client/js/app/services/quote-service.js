@@ -1,9 +1,9 @@
 angular.module("GoldPulse")
     .service('QuoteService', ['$http', '$q', 'CleaningService', function($http, $q, CleaningService) {
 
-        this.fetch = function(m0) {
+        this.fetch = function(m) {
             var deferred = $q.defer(),
-                query = 'm0=' + m0,
+                query = 'm=' + m,
                 requestUrl = '/api?' + query;
 
             $http.get(requestUrl).then(function(res) {

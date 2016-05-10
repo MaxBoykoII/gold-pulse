@@ -17,6 +17,22 @@ section ul {
 	background-color: white !important;
 }
 
+.red {
+	background-color: rgb(245, 230, 224);
+}
+
+.yellow {
+	background-color: rgb(182, 181, 151);
+}
+
+.blue {
+	background-color: rgb(140, 175, 206);
+}
+
+.green {
+	background-color: rgb(161, 194, 153);
+}
+
 button {
 	margin: 2% 0;
 	display: inline-block;

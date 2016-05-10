@@ -1,5 +1,5 @@
 angular.module('GoldPulse')
-    .controller('TableCtrl', ['$scope', 'QuoteService', function($scope, QuoteService) {
+    .controller('TableCtrl', ['$scope', 'QuoteService', 'ColoringService', function($scope, QuoteService, ColoringService) {
         $scope.selection = 'au1k';
         $scope.set = function(metric) {
             $scope.selection = metric;
@@ -16,6 +16,8 @@ angular.module('GoldPulse')
                 });
             });
         };
+        
+        $scope.color = ColoringService.color;
 
         $scope.generate('2013-01-04');
     }]);

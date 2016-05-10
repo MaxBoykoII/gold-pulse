@@ -41,7 +41,7 @@
           <td> {{stock.name}}</td>
           <td> {{stock.ticker}}</td>
           <td ng-repeat="metric in metrics" ng-class="{'highlight': metric === selection}">{{stock.metrics[metric]}}</td>
-          <td ng-repeat="ymd in dates">{{stock.dates| match : ymd}}</td>
+          <td ng-repeat="ymd in dates" ng-class="color(ymd, stock)">{{stock.dates| match : ymd}}</td>
         </tr>
       </tbody>
     </table>
@@ -51,6 +51,7 @@
   <script src="/js/jquery.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
   <!-- App  Modules -->
   <script src="/js/app/app.js"></script>
 

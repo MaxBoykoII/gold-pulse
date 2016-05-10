@@ -4,8 +4,7 @@
 <head>
   <title>Gold Pulse</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
@@ -18,26 +17,30 @@
   <h3 class="text-center">
                 Resize the browser screen to see how the table changes
             </h3>
-  <date-input></date-input>
+  <date-input class="text-center"></date-input>
 
+  <section>
+    <ul class='nav nav-pills'>
+      <li ng-repeat="metric in metrics" ng-class="{active: metric === selection}"> <a href="#" ng-click="set(metric)">{{metric}}</a> </li>
+    </ul>
+  </section>
 
+  <div class="container well">
 
-  <div class="container well" id="no-more-tables">
-
-    <table class="table table-bordered table-striped table-condensed">
+    <table class="table table-bordered table-striped">
       <thread>
-        <tr>
+        <tr class="table-info">
           <td> name</td>
           <td> ticker </td>
-          <td ng-repeat="metric in metrics">{{metric}}</td>
+          <td ng-repeat="metric in metrics" ng-class="{'highlight': metric === selection}">{{metric}}</td>
           <td ng-repeat="ymd in dates">{{ymd}}</td>
         </tr>
       </thread>
       <tbody>
-        <tr ng-repeat="stock in stocks">
+        <tr ng-repeat="stock in stocks | orderBy: sort | limitTo: 25">
           <td> {{stock.name}}</td>
           <td> {{stock.ticker}}</td>
-          <td ng-repeat="metric in metrics">{{stock.metrics[metric]}}</td>
+          <td ng-repeat="metric in metrics" ng-class="{'highlight': metric === selection}">{{stock.metrics[metric]}}</td>
           <td ng-repeat="ymd in dates">{{stock.dates| match : ymd}}</td>
         </tr>
       </tbody>
@@ -57,6 +60,7 @@
   <!-- App services -->
   <script src="/js/app/services/cleaning-service.js"></script>
   <script src="/js/app/services/quote-service.js"></script>
+  <script src="/js/app/services/coloring-service.js"></script>
 
   <!-- App controllers -->
   <script src="/js/app/controllers/table.js"></script>

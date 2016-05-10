@@ -1,6 +1,8 @@
 <form>
-    <input class="form-horizontal" type="text"  ng-model="dateStr"/>
-    <label> Min: {{min}}</label>
-    <label> Max: {{max}}</label>
-    <button class="btn btn-primary" ng-click="submit()">Submit</button>
-  </form>
+    <input class="form-control-date" id="date" type="text" ng-model="dateStr" />
+    <label for="date"> Min: {{min}}</label>
+    <label for="date"> Max: {{max}}</label>
+    <div class="wrapper">
+        <button class="btn btn-primary" ng-click="submit()">Submit</button>
+    </div>
+</form>

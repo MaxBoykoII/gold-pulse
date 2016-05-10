@@ -4,7 +4,7 @@ angular.module('GoldPulse')
             return dates.filter(function(el) {
                 return el.ymd === ymd;
             }).map(function(el) {
-                return el.close;
+                return el.change;
             })[0];
         };
     });

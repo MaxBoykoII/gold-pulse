@@ -33,6 +33,14 @@ section ul {
 	background-color: rgb(161, 194, 153);
 }
 
+.invalid {
+	border-color: #FA787E;
+}
+
+.valid {
+	border-color: #78FA89;
+}
+
 button {
 	margin: 2% 0;
 	display: inline-block;

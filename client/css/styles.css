@@ -25,6 +25,7 @@ section ul {
 
 .highlight {
 	background-color: white !important;
+	font-weight: bold;
 }
 
 .red {

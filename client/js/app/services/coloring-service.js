@@ -11,12 +11,12 @@ angular.module('GoldPulse').service('ColoringService', [function() {
                         ymd: date,
                         returns: []
                     };
-                    stocks.forEach((stock) => {
+                    for (let stock of stocks) {
                         const change = stock.dates.find((el) => el.ymd === date).change;
                         if (change !== 'no data') {
                             obj.returns.push(parseFloat(change));
                         }
-                    });
+                    }
                     obj.returns.sort((a, b) => a - b);
                     return obj;
                 });
@@ -26,9 +26,9 @@ angular.module('GoldPulse').service('ColoringService', [function() {
                     quartiles: []
                 };
                 if (el.returns.length) {
-                    [0.25, 0.50, 0.75, 1].forEach((alpha) => {
+                    for (let alpha of[0.25, 0.50, 0.75, 1]) {
                         obj.quartiles.push(d3.quantile(el.returns, alpha));
-                    });
+                    }
                 }
                 return obj;
             });
@@ -42,18 +42,17 @@ angular.module('GoldPulse').service('ColoringService', [function() {
                         quartiles: []
                     },
                     data = [];
-                stocks.forEach((stock) => {
+                for (let stock of stocks) {
                     const val = stock.metrics[metric];
                     if (!isNaN(val)) {
                         data.push(val);
                     }
-                });
+                }
                 if (data.length) {
                     data.sort((a, b) => a - b);
-                    console.log(data);
-                    [0.25, 0.50, 0.75, 1].forEach((alpha) => {
+                    for (let alpha of[0.25, 0.50, 0.75, 1]) {
                         obj.quartiles.push(d3.quantile(data, alpha));
-                    });
+                    }
                 }
                 return obj;
             });
@@ -61,7 +60,7 @@ angular.module('GoldPulse').service('ColoringService', [function() {
         };
 
         //Functions for coloring logic
-        this.colorByDate = function(ymd, stock, mode, selection) {
+        this.colorByDate = function(dates, ymd, stock, mode, selection) {
             if (mode === "test") {
                 let change = stock.dates.find((el) => el.ymd === ymd).change;
                 if (change !== 'no data') {
@@ -84,7 +83,7 @@ angular.module('GoldPulse').service('ColoringService', [function() {
                     return null;
                 }
             }
-            else if (ymd === selection) {
+            else if (dates.indexOf(ymd) === selection) {
                 return 'highlight';
 
             }

@@ -1,6 +1,6 @@
 angular.module('GoldPulse')
     .controller('DateCtrl', ['$scope', '$http', function($scope, $http) {
-        var dates;
+        let dates;
         $http.get('https://www.goldminerpulse.com/_demo/valid-dates-api.php').then(function(res) {
             dates = res.data;
             $scope.max = dates.reduce((acc, curr) => {

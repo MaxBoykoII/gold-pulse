@@ -11,29 +11,39 @@ angular.module('GoldPulse')
             //[1] Bring in raw data and start building clean data using the m0 data
             let rawData = res.data.body.dates,
                 cleanData = rawData[0].oids.map(function(el) {
+                    const au1k = handleVal(el.au1k),
+                        price = handleVal(el.close),
+                        auV = (!isNaN(au1k) && !isNaN(price)) ? au1k / (1000 * price) : "no data",
+                        aueq = handleVal(el.aueq),
+                        mcap = handleVal(el.mcap),
+                        per_aueq = handleVal(el.per_aueq),
+                        grd = handleVal(el.grd),
+                        id = el.id,
+                        name = el.name,
+                        ticker = el.ticker;
 
                     return {
-                        "id": el.id,
+                        id,
                         "startDate": rawData[0].ymd,
-                        "dates": [],
-                        "name": el.name,
-                        "ticker": el.ticker,
-                        "metrics": {
-                            au1k: handleVal(el.au1k),
-                            aueq: handleVal(el.aueq),
-                            mcap: handleVal(el.mcap),
-                            per_aueq: handleVal(el.per_aueq),
-                            grd: handleVal(el.grd),
-                            price: handleVal(el.close)
-                        }
+                            "dates": [],
+                            name,
+                            ticker,
+                            "metrics": {
+                                auV,
+                                aueq,
+                                mcap,
+                                per_aueq,
+                                grd,
+                                price
+                            }
                     };
                 });
-            console.log(rawData);
+
             //[2] Wherever possible, insert closing price on date for each id.
 
-            cleanData.forEach(function(stock) {
+            for (let stock of cleanData) {
                 let id = stock.id;
-                rawData.forEach(function(element, i, arr) {
+                for (let element of rawData) {
                     if (element.ymd !== stock.startDate) {
                         let filtered = element.oids.filter(function(oidData) {
                                 return oidData.id === id;
@@ -46,8 +56,8 @@ angular.module('GoldPulse')
                             change: change
                         });
                     }
-                });
-            });
+                }
+            }
 
 
             return cleanData;

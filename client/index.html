@@ -43,7 +43,7 @@
     </div>
     <div class="col-md-6">
       <ul class='nav nav-tabs'>
-        <li ng-repeat="date in dates" ng-class="{active: date === selection}"><a href="#" ng-click="set(date)">{{date}}</a></li>
+        <li ng-repeat="date in dates" ng-class="{active: date === selection}"><a href="#" ng-click="set(dates.indexOf(date))">{{date}}</a></li>
       </ul>
     </div>
 
@@ -64,8 +64,8 @@
         <tr ng-repeat="stock in stocks | orderBy: sort | limitTo: limit">
           <td> {{stock.name}}</td>
           <td> {{stock.ticker}}</td>
-          <td ng-repeat="metric in metrics" ng-class="colorByMetric(metric, stock, mode, selection)">{{stock.metrics[metric]}}</td>
-          <td ng-repeat="ymd in dates" ng-class="colorByDate(ymd, stock, mode, selection)">{{stock.dates| match : ymd}}</td>
+          <td ng-repeat="metric in metrics" ng-class="colorByMetric(metric, stock, mode, selection)">{{(metric === 'price') ? (stock.metrics['price']| currency) : (stock.metrics[metric]| number: 1)}}</td>
+          <td ng-repeat="ymd in dates" ng-class="colorByDate(dates, ymd, stock, mode, selection)">{{stock.dates| match : ymd}}</td>
         </tr>
       </tbody>
     </table>

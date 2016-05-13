@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype html >
 <html lang="en">
 
 <head>
@@ -12,17 +12,41 @@
 
 
   <h1 class="text-center">
-                Stock Table
+                TSX/TSXV Gold/Silver Exp/Dev
             </h1>
   <h3 class="text-center">
-                Resize the browser screen to see how the table changes
+                Fundamental Data Exploration Tool
             </h3>
-  <date-input class="text-center"></date-input>
-
+  <div class="row">
+    <div class="col-md-9">
+      <date-input class="text-center"></date-input>
+    </div>
+    <div class="col-md-3 align">
+      <ul class="nav nav-tabs">
+        <li class="active dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="">Limit to: {{limit}} <span class="caret"></span>
+        </a>
+          <ul class="dropdown-menu">
+            <li><a href="#" ng-click="limit = 25">25</a></li>
+            <li><a href="#" ng-click="limit = 50">50</a></li>
+            <li><a href="#" ng-click="limit = 100">100</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
   <section>
-    <ul class='nav nav-pills'>
-      <li ng-repeat="metric in metrics" ng-class="{active: metric === selection}"> <a href="#" ng-click="set(metric)">{{metric}}</a> </li>
-    </ul>
+    <div class="col-md-6">
+      <ul class='nav nav-tabs'>
+        <li ng-repeat="metric in metrics" ng-class="{active: metric === selection}"> <a href="#" ng-click="set(metric)">{{metric}}</a> </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <ul class='nav nav-tabs'>
+        <li ng-repeat="date in dates" ng-class="{active: date === selection}"><a href="#" ng-click="set(date)">{{date}}</a></li>
+      </ul>
+    </div>
+
   </section>
 
   <div class="container well">
@@ -37,20 +61,21 @@
         </tr>
       </thread>
       <tbody>
-        <tr ng-repeat="stock in stocks | orderBy: sort | limitTo: 25">
+        <tr ng-repeat="stock in stocks | orderBy: sort | limitTo: limit">
           <td> {{stock.name}}</td>
           <td> {{stock.ticker}}</td>
-          <td ng-repeat="metric in metrics" ng-class="{'highlight': metric === selection}">{{stock.metrics[metric]}}</td>
-          <td ng-repeat="ymd in dates" ng-class="color(ymd, stock)">{{stock.dates| match : ymd}}</td>
+          <td ng-repeat="metric in metrics" ng-class="colorByMetric(metric, stock, mode, selection)">{{stock.metrics[metric]}}</td>
+          <td ng-repeat="ymd in dates" ng-class="colorByDate(ymd, stock, mode, selection)">{{stock.dates| match : ymd}}</td>
         </tr>
       </tbody>
     </table>
   </div>
 
+
   <!-- Javascript libraries -->
   <script src="/js/jquery.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
   <!-- App  Modules -->
   <script src="/js/app/app.js"></script>

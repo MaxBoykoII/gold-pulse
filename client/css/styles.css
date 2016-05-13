@@ -1,3 +1,8 @@
+body {
+	background-color: rgb(238, 221, 130);
+	font-family: Verdana, sans-serif;
+}
+
 section {
 	width: 100%;
 	text-align: center;
@@ -7,6 +12,11 @@ section ul {
 	text-align: center;
 	position: relative;
 	display: inline-block;
+}
+
+.align {
+	margin-top: 0;
+	margin-bottom: 1%;
 }
 
 .wrapper {
@@ -22,7 +32,7 @@ section ul {
 }
 
 .yellow {
-	background-color: rgb(182, 181, 151);
+	background-color: rgb(234, 227, 161);
 }
 
 .blue {

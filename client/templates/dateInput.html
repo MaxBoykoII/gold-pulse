@@ -1,8 +1,5 @@
 <form>
-    <input class="form-control-date" id="date" type="text" ng-model="dateStr" />
-    <label for="date"> Min: {{min}}</label>
-    <label for="date"> Max: {{max}}</label>
-    <div class="wrapper">
-        <button class="btn btn-primary" ng-click="submit()">Submit</button>
-    </div>
+    <label for="date"> Dates: {{min}} to {{max}}</label>
+    <input class="form-control-date align" id="date" type="text" ng-model="dateStr" />
+    <button class="btn btn-primary align" ng-click="submit()">Submit</button>
 </form>

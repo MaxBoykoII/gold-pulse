@@ -1,8 +1,10 @@
-angular.module('GoldPulse')
-    .service('ColoringService', [function() {
-        let quartilesByDate = [];
+angular.module('GoldPulse').service('ColoringService', [function() {
+        //Initialize quartiles
+        let quartilesByDate = [],
+            quartilesByMetric = [];
 
-        this.setQuantiles = function(stocks) {
+        //Function to compute Quartiles for returns by date
+        this.setQuartilesByDate = function(stocks) {
             let dates = stocks[0].dates.map((el) => el.ymd),
                 returnsByDate = dates.map((date) => {
                     let obj = {
@@ -15,7 +17,7 @@ angular.module('GoldPulse')
                             obj.returns.push(parseFloat(change));
                         }
                     });
-                    obj.returns.sort();
+                    obj.returns.sort((a, b) => a - b);
                     return obj;
                 });
             quartilesByDate = returnsByDate.map((el) => {
@@ -29,33 +31,89 @@ angular.module('GoldPulse')
                     });
                 }
                 return obj;
-
             });
             return quartilesByDate;
         };
-        this.color = function(ymd, stock) {
-            let change = stock.dates.find((el) => el.ymd === ymd).change;
-            if (change !== 'no data') {
-                change = parseFloat(change);
-                const quartiles = quartilesByDate.find((el) => el.ymd === ymd).quartiles;
-                if (change <= quartiles[0]) {
-                    return 'red';
+        this.setQuartilesByMetric = function(stocks) {
+            let metrics = Object.keys(stocks[0].metrics);
+            quartilesByMetric = metrics.map((metric) => {
+                let obj = {
+                        metric: metric,
+                        quartiles: []
+                    },
+                    data = [];
+                stocks.forEach((stock) => {
+                    const val = stock.metrics[metric];
+                    if (!isNaN(val)) {
+                        data.push(val);
+                    }
+                });
+                if (data.length) {
+                    data.sort((a, b) => a - b);
+                    console.log(data);
+                    [0.25, 0.50, 0.75, 1].forEach((alpha) => {
+                        obj.quartiles.push(d3.quantile(data, alpha));
+                    });
                 }
-                else if (change <= quartiles[1]) {
-                    return 'yellow';
+                return obj;
+            });
+            return quartilesByMetric;
+        };
 
-                }
-                else if (change <= quartiles[2]) {
-                    return 'blue';
+        //Functions for coloring logic
+        this.colorByDate = function(ymd, stock, mode, selection) {
+            if (mode === "test") {
+                let change = stock.dates.find((el) => el.ymd === ymd).change;
+                if (change !== 'no data') {
+                    change = parseFloat(change);
+                    const quartiles = quartilesByDate.find((el) => el.ymd === ymd).quartiles;
+                    if (change <= quartiles[0]) {
+                        return 'red';
+                    }
+                    else if (change <= quartiles[1]) {
+                        return 'yellow';
+                    }
+                    else if (change <= quartiles[2]) {
+                        return 'blue';
+                    }
+                    else {
+                        return 'green';
+                    }
                 }
                 else {
-                    return 'green';
+                    return null;
+                }
+            }
+            else if (ymd === selection) {
+                return 'highlight';
+
+            }
+        };
+        this.colorByMetric = function(metric, stock, mode, selection) {
+            if (selection === metric) {
+                return 'highlight';
+            }
+            else if (mode === 'train') {
+                const val = stock.metrics[metric];
+                if (!isNaN(val)) {
+                    const quartiles = quartilesByMetric.find((el) => el.metric === metric).quartiles;
+                    if (val <= quartiles[0]) {
+                        return 'red';
+                    }
+                    else if (val <= quartiles[1]) {
+                        return 'yellow';
+                    }
+                    else if (val <= quartiles[2]) {
+                        return 'blue';
+                    }
+                    else {
+                        return 'green';
+                    }
                 }
 
             }
-            else {
-                return null;
-            }
-
         };
-    }]);
+
+    }
+
+]);

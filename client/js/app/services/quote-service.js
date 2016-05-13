@@ -8,7 +8,8 @@ angular.module("GoldPulse")
 
             $http.get(requestUrl).then(function(res) {
                 res = CleaningService.clean(res);
-                ColoringService.setQuantiles(res);
+                ColoringService.setQuartilesByDate(res);
+                ColoringService.setQuartilesByMetric(res);
                 
                 deferred.resolve({
                     res: res

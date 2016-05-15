@@ -1,8 +1,8 @@
 angular.module('GoldPulse')
     .controller('DateCtrl', ['$scope', '$http', function($scope, $http) {
         let dates;
-        $http.get('https://www.goldminerpulse.com/_demo/valid-dates-api.php').then(function(res) {
-            dates = res.data;
+        $http.get('/dates').then(function(res) {
+            dates = res.data.body;
             $scope.max = dates.reduce((acc, curr) => {
                 return (Date.parse(curr) > Date.parse(acc)) ? curr : acc;
             });

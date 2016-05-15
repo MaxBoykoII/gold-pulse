@@ -4,10 +4,26 @@ var http = require('http'),
   app = express(),
   server = http.createServer(app),
   request = require('request'),
-  baseUrl = 'https://www.goldminerpulse.com/_demo/dvex-api.php?';
+  baseUrl = 'https://www.goldminerpulse.com/_demo/dvex-api.php?',
+  datesUrl = 'https://www.goldminerpulse.com/_demo/valid-dates-api.php';
 
 app.use(express.static(path.resolve(__dirname, 'client')));
 
+app.get('/dates', function(req, res) {
+  request({
+    "uri": datesUrl,
+    "method": "GET"
+  }, function(err, response, body) {
+    if (err) {
+      console.log(err);
+    }
+    body = JSON.parse(body);
+    res.json({
+      body: body
+    });
+
+  });
+});
 app.get('/api', function(req, res) {
   var m = req.query.m,
     query = 'm=' + m,

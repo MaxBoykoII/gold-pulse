@@ -3,12 +3,12 @@
 
   <head>
     <title>Gold Pulse</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/styles.css">
   </head>
 
-  <body ng-app="GoldPulse" ng-controller="TableCtrl" ng-cloack>
+  <body ng-app="GoldPulse" ng-controller="TableCtrl" class="ng-cloak">
 
 
     <h1 class="text-center">
@@ -49,11 +49,11 @@
 
     </section>
 
-    <div class="container well">
+    <div class="table-responsive well">
 
       <table class="table table-bordered table-striped">
         <thread>
-          <tr class="table-info">
+          <tr>
             <td> name</td>
             <td> ticker </td>
             <td ng-repeat="metric in metrics" ng-class="{'highlight': metric === selection}">{{metric}}</td>
@@ -64,21 +64,23 @@
           <tr ng-repeat="stock in stocks | orderBy: sort | limitTo: limit">
             <td> {{stock.name}}</td>
             <td> {{stock.ticker}}</td>
-            <td ng-repeat="metric in metrics" ng-class="colorByMetric(metric, stock, mode, selection)">{{(metric === 'price') ? (stock.metrics['price']| currency) : (stock.metrics[metric]| number: 1)}}</td>
+            <td ng-repeat="metric in metrics" ng-class="colorByMetric(metric, stock, mode, selection)">{{(metric === 'price') ? (stock.metrics['price']| currency) : (stock.metrics[metric]| number: 2)}}</td>
             <td ng-repeat="ymd in dates" ng-class="colorByDate(dates, ymd, stock, mode, selection)">{{stock.dates| match : ymd}}</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-
+    <!-- Pollyfills for older broswers -->
+    <script src="/js/pollyfills/bind.js"></script>
+    <script src="/js/pollyfills/find.js"></script>
     <!-- Javascript libraries -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.min.js"></script>
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+
+
     <!-- App  Modules -->
     <script src="/js/app/app.js"></script>
 

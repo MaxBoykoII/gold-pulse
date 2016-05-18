@@ -4,14 +4,14 @@ angular.module('GoldPulse')
 
             //[0] helper function for cleaning data
             function handleVal(val) {
-                const parsed = parseFloat(val);
+                var parsed = parseFloat(val);
                 return isNaN(parsed) ? "no data" : parsed;
             }
 
             //[1] Bring in raw data and start building clean data using the m0 data
-            let rawData = res.data.body.dates,
+            var rawData = res.data.body.dates,
                 cleanData = rawData[0].oids.map(function(el) {
-                    const au1k = handleVal(el.au1k),
+                    var au1k = handleVal(el.au1k),
                         price = handleVal(el.close),
                         auV = (!isNaN(au1k) && !isNaN(price)) ? au1k / (1000 * price) : "no data",
                         aueq = handleVal(el.aueq),
@@ -23,29 +23,31 @@ angular.module('GoldPulse')
                         ticker = el.ticker;
 
                     return {
-                        id,
+                        id: id,
                         "startDate": rawData[0].ymd,
-                            "dates": [],
-                            name,
-                            ticker,
-                            "metrics": {
-                                auV,
-                                aueq,
-                                mcap,
-                                per_aueq,
-                                grd,
-                                price
-                            }
+                        "dates": [],
+                        name: name,
+                        ticker: ticker,
+                        "metrics": {
+                            auV: auV,
+                            aueq: aueq,
+                            mcap: mcap,
+                            per_aueq: per_aueq,
+                            grd: grd,
+                            price: price
+                        }
                     };
                 });
 
             //[2] Wherever possible, insert closing price on date for each id.
 
-            for (let stock of cleanData) {
-                let id = stock.id;
-                for (let element of rawData) {
+            for (var i = 0, l = cleanData.length; i < l; i++) {
+                var stock = cleanData[i],
+                    id = stock.id;
+                for (var j = 0, l2 = rawData.length; j < l2; j++) {
+                    var element = rawData[j];
                     if (element.ymd !== stock.startDate) {
-                        let filtered = element.oids.filter(function(oidData) {
+                        var filtered = element.oids.filter(function(oidData) {
                                 return oidData.id === id;
                             }),
                             close = filtered.length ? parseFloat(filtered[0].close) : "no data",

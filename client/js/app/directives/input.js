@@ -7,7 +7,7 @@ angular.module('GoldPulse')
             link: function(scope, element) {
                 scope.$watch('dateStr', function(newVal) {
                     const invalid = isNaN(Date.parse(newVal));
-                    let input = element.find('.form-control-date');
+                    var input = element.find('.form-control-date');
                     if (invalid && input.hasClass('valid')) {
                         input.removeClass('valid').addClass('invalid');
                     }

@@ -1,33 +1,40 @@
 angular.module('GoldPulse').service('ColoringService', [function() {
         //Initialize quartiles
-        let quartilesByDate = [],
+        var quartilesByDate = [],
             quartilesByMetric = [];
 
         //Function to compute Quartiles for returns by date
         this.setQuartilesByDate = function(stocks) {
-            let dates = stocks[0].dates.map((el) => el.ymd),
-                returnsByDate = dates.map((date) => {
-                    let obj = {
+            var dates = stocks[0].dates.map(function(el) {
+                    return el.ymd
+                }),
+                returnsByDate = dates.map(function(date) {
+                    var obj = {
                         ymd: date,
                         returns: []
                     };
-                    for (let stock of stocks) {
-                        const change = stock.dates.find((el) => el.ymd === date).change;
+                    for (var i = 0, l = stocks.length; i < l; i++) {
+                        var stock = stocks[i],
+                            change = stock.dates.find(function(el) {
+                                return el.ymd === date;
+                            }).change;
                         if (change !== 'no data') {
                             obj.returns.push(parseFloat(change));
                         }
                     }
-                    obj.returns.sort((a, b) => a - b);
+                    obj.returns.sort(function(a, b) {
+                        return a - b;
+                    });
                     return obj;
                 });
-            quartilesByDate = returnsByDate.map((el) => {
-                let obj = {
+            quartilesByDate = returnsByDate.map(function(el) {
+                var obj = {
                     ymd: el.ymd,
                     quartiles: []
                 };
                 if (el.returns.length) {
-                    for (let alpha of[0.25, 0.50, 0.75, 1]) {
-                        obj.quartiles.push(d3.quantile(el.returns, alpha));
+                    for (var i = 0.25; i < 1; i += 0.25) {
+                        obj.quartiles.push(d3.quantile(el.returns, i));
                     }
                 }
                 return obj;
@@ -35,23 +42,26 @@ angular.module('GoldPulse').service('ColoringService', [function() {
             return quartilesByDate;
         };
         this.setQuartilesByMetric = function(stocks) {
-            let metrics = Object.keys(stocks[0].metrics);
-            quartilesByMetric = metrics.map((metric) => {
-                let obj = {
+            var metrics = Object.keys(stocks[0].metrics);
+            quartilesByMetric = metrics.map(function(metric) {
+                var obj = {
                         metric: metric,
                         quartiles: []
                     },
                     data = [];
-                for (let stock of stocks) {
-                    const val = stock.metrics[metric];
+                for (var i = 0, l = stocks.length; i < l; i++) {
+                    var stock = stocks[i],
+                        val = stock.metrics[metric];
                     if (!isNaN(val)) {
                         data.push(val);
                     }
                 }
                 if (data.length) {
-                    data.sort((a, b) => a - b);
-                    for (let alpha of[0.25, 0.50, 0.75, 1]) {
-                        obj.quartiles.push(d3.quantile(data, alpha));
+                    data.sort(function(a, b) {
+                        return a - b
+                    });
+                    for (var i = 0.25; i < 1; i += 0.25) {
+                        obj.quartiles.push(d3.quantile(data, i));
                     }
                 }
                 return obj;
@@ -62,10 +72,14 @@ angular.module('GoldPulse').service('ColoringService', [function() {
         //Functions for coloring logic
         this.colorByDate = function(dates, ymd, stock, mode, selection) {
             if (mode === "test") {
-                let change = stock.dates.find((el) => el.ymd === ymd).change;
+                var change = stock.dates.find(function(el) {
+                    return el.ymd === ymd;
+                }).change;
                 if (change !== 'no data') {
                     change = parseFloat(change);
-                    const quartiles = quartilesByDate.find((el) => el.ymd === ymd).quartiles;
+                    const quartiles = quartilesByDate.find(function(el) {
+                        return el.ymd === ymd;
+                    }).quartiles;
                     if (change <= quartiles[0]) {
                         return 'red';
                     }
@@ -93,9 +107,11 @@ angular.module('GoldPulse').service('ColoringService', [function() {
                 return 'highlight';
             }
             else if (mode === 'train') {
-                const val = stock.metrics[metric];
+                var val = stock.metrics[metric];
                 if (!isNaN(val)) {
-                    const quartiles = quartilesByMetric.find((el) => el.metric === metric).quartiles;
+                    var quartiles = quartilesByMetric.find(function(el) {
+                        return el.metric === metric;
+                    }).quartiles;
                     if (val <= quartiles[0]) {
                         return 'red';
                     }

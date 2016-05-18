@@ -1,5 +1,6 @@
 angular.module('GoldPulse')
     .controller('TableCtrl', ['$scope', 'QuoteService', 'ColoringService', function($scope, QuoteService, ColoringService) {
+
         $scope.limit = 25;
         $scope.selection = 'auV';
         $scope.mode = 'test';
@@ -8,12 +9,14 @@ angular.module('GoldPulse')
             $scope.mode = ($scope.metrics.indexOf(selection) !== -1) ? 'test' : 'train';
         };
         $scope.sort = function(stock) {
-            let selection = $scope.selection;
+            var selection = $scope.selection;
             if ($scope.metrics.indexOf(selection) !== -1) {
                 return stock.metrics[selection] * -1;
             }
             else {
-                return parseFloat(stock.dates.find((el) => el.ymd === $scope.dates[selection]).change) * -1;
+                return parseFloat(stock.dates.find(function(el) {
+                    return el.ymd === $scope.dates[selection];
+                }).change) * -1;
             }
         };
 

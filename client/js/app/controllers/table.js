@@ -13,6 +13,12 @@ angular.module('GoldPulse')
             if ($scope.metrics.indexOf(selection) !== -1) {
                 return stock.metrics[selection] * -1;
             }
+            else if (selection === 'name') {
+                return stock.name;
+            }
+            else if (selection === 'ticker') {
+                return stock.ticker;
+            }
             else {
                 return parseFloat(stock.dates.find(function(el) {
                     return el.ymd === $scope.dates[selection];
@@ -23,6 +29,9 @@ angular.module('GoldPulse')
         $scope.generate = function(m) {
             QuoteService.fetch(m).then(function(data) {
                 $scope.stocks = data.res;
+                console.log($scope.stocks.find(function(stock) {
+                    return stock.name === "Stroud Resources Ltd.";
+                }));
                 $scope.metrics = Object.keys(data.res[0].metrics);
                 $scope.dates = data.res[0].dates.map(function(el) {
                     return el.ymd;

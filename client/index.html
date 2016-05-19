@@ -1,104 +1,107 @@
 <!doctype html>
-  <html lang="en">
+<html lang="en">
 
-  <head>
-    <title>Gold Pulse</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
-  </head>
+<head>
+  <title>Gold Pulse</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
 
-  <body ng-app="GoldPulse" ng-controller="TableCtrl" class="ng-cloak">
+<body ng-app="GoldPulse" ng-controller="TableCtrl" class="ng-cloak">
 
 
-    <h1 class="text-center">
+  <h1 class="text-center">
                 TSX/TSXV Gold/Silver Exp/Dev
             </h1>
-    <h3 class="text-center">
+  <h3 class="text-center">
                 Fundamental Data Exploration Tool
             </h3>
-    <div class="row">
-      <div class="col-md-9">
-        <date-input class="text-center"></date-input>
-      </div>
-      <div class="col-md-3 align">
-        <ul class="nav nav-tabs">
-          <li class="active dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="">Limit to: {{limit}} <span class="caret"></span>
+  <div class="row">
+    <div class="col-sm-9">
+      <date-input class="text-center"></date-input>
+    </div>
+    <div class="col-sm-3 align">
+      <ul class="nav nav-tabs">
+        <li class="active dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="">Limit to: {{limit}} <span class="caret"></span>
         </a>
-            <ul class="dropdown-menu">
-              <li><a href="#" ng-click="limit = 25">25</a></li>
-              <li><a href="#" ng-click="limit = 50">50</a></li>
-              <li><a href="#" ng-click="limit = 100">100</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+          <ul class="dropdown-menu">
+            <li><a href="#" ng-click="limit = 25">25</a></li>
+            <li><a href="#" ng-click="limit = 50">50</a></li>
+            <li><a href="#" ng-click="limit = 100">100</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
-    <section>
-      <div class="col-md-6">
-        <ul class='nav nav-tabs'>
-          <li ng-repeat="metric in metrics" ng-class="{active: metric === selection}"> <a href="#" ng-click="set(metric)">{{metric}}</a> </li>
-        </ul>
-      </div>
-      <div class="col-md-6">
-        <ul class='nav nav-tabs'>
-          <li ng-repeat="date in dates" ng-class="{active: date === selection}"><a href="#" ng-click="set(dates.indexOf(date))">{{date}}</a></li>
-        </ul>
-      </div>
-
-    </section>
-
-    <div class="table-responsive well">
-
-      <table class="table table-bordered table-striped">
-        <thread>
-          <tr>
-            <td> name</td>
-            <td> ticker </td>
-            <td ng-repeat="metric in metrics" ng-class="{'highlight': metric === selection}">{{metric}}</td>
-            <td ng-repeat="ymd in dates">{{ymd}}</td>
-          </tr>
-        </thread>
-        <tbody>
-          <tr ng-repeat="stock in stocks | orderBy: sort | limitTo: limit">
-            <td> {{stock.name}}</td>
-            <td> {{stock.ticker}}</td>
-            <td ng-repeat="metric in metrics" ng-class="colorByMetric(metric, stock, mode, selection)">{{(metric === 'price') ? (stock.metrics['price']| currency) : (stock.metrics[metric]| number: 2)}}</td>
-            <td ng-repeat="ymd in dates" ng-class="colorByDate(dates, ymd, stock, mode, selection)">{{stock.dates| match : ymd}}</td>
-          </tr>
-        </tbody>
-      </table>
+  </div>
+  <section id="tabs">
+    <div class="col-md-6">
+      <ul class='nav nav-tabs'>
+        <li><a href="#" ng-class="{active: 'name' === selection}" ng-click="set('name')">name</a></li>
+        <li><a href="#" ng-class="{active: 'ticker' === selection}" ng-click="set('ticker')">ticker</a></li>
+        <li ng-repeat="metric in metrics" ng-class="{active: metric === selection}"> <a href="#" ng-click="set(metric)">{{metric}}</a> </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <ul class='nav nav-tabs'>
+        <li ng-repeat="date in dates" ng-class="{active: date === selection}"><a href="#" ng-click="set(dates.indexOf(date))">{{date}}</a></li>
+      </ul>
     </div>
 
-    <!-- Pollyfills for older broswers -->
-    <script src="/js/pollyfills/bind.js"></script>
-    <script src="/js/pollyfills/find.js"></script>
-    <!-- Javascript libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+  </section>
+
+  <div class="table-responsive well">
+
+    <table class="table table-bordered table-striped">
+      <thread>
+        <tr>
+          <td ng-class="{'highlight': 'name' === selection}"> name</td>
+          <td ng-class="{'highlight': 'ticker' === selection}"> ticker </td>
+          <td ng-repeat="metric in metrics" ng-class="{'highlight': metric === selection}">{{metric}}</td>
+          <td ng-repeat="ymd in dates">{{ymd}}</td>
+        </tr>
+      </thread>
+      <tbody>
+        <tr ng-repeat="stock in stocks | orderBy: sort | limitTo: limit">
+          <td ng-class="{'highlight': 'name' === selection}"> {{stock.name}}</td>
+          <td ng-class="{'highlight': 'ticker' === selection}"> {{stock.ticker}}</td>
+          <td ng-repeat="metric in metrics" ng-class="colorByMetric(metric, stock, mode, selection)">{{(stock.metrics[metric]) | format : metric}}</td>
+          <td ng-repeat="ymd in dates" ng-class="colorByDate(dates, ymd, stock, mode, selection)">{{stock.dates| match : ymd}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pollyfills for older broswers -->
+  <script src="/js/pollyfills/bind.js"></script>
+  <script src="/js/pollyfills/find.js"></script>
+  <!-- Javascript libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
 
 
-    <!-- App  Modules -->
-    <script src="/js/app/app.js"></script>
+  <!-- App  Modules -->
+  <script src="/js/app/app.js"></script>
 
-    <!-- App Filters -->
-    <script src="/js/app/filters/match.js"></script>
+  <!-- App Filters -->
+  <script src="/js/app/filters/match.js"></script>
+  <script src="/js/app/filters/format.js"></script>
 
-    <!-- App services -->
-    <script src="/js/app/services/cleaning-service.js"></script>
-    <script src="/js/app/services/quote-service.js"></script>
-    <script src="/js/app/services/coloring-service.js"></script>
+  <!-- App services -->
+  <script src="/js/app/services/cleaning-service.js"></script>
+  <script src="/js/app/services/quote-service.js"></script>
+  <script src="/js/app/services/coloring-service.js"></script>
 
-    <!-- App controllers -->
-    <script src="/js/app/controllers/table.js"></script>
-    <script src="/js/app/controllers/date.js"></script>
+  <!-- App controllers -->
+  <script src="/js/app/controllers/table.js"></script>
+  <script src="/js/app/controllers/date.js"></script>
 
-    <!-- App directives -->
-    <script src="/js/app/directives/input.js"></script>
+  <!-- App directives -->
+  <script src="/js/app/directives/input.js"></script>
 
-  </body>
+</body>
 
-  </html>
+</html>

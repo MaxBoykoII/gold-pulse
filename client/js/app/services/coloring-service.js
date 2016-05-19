@@ -71,7 +71,7 @@ angular.module('GoldPulse').service('ColoringService', [function() {
 
         //Functions for coloring logic
         this.colorByDate = function(dates, ymd, stock, mode, selection) {
-            if (mode === "test") {
+            if (mode === "test" || selection === 'name' || selection === 'ticker') {
                 var change = stock.dates.find(function(el) {
                     return el.ymd === ymd;
                 }).change;
@@ -106,7 +106,7 @@ angular.module('GoldPulse').service('ColoringService', [function() {
             if (selection === metric) {
                 return 'highlight';
             }
-            else if (mode === 'train') {
+            else if (mode === 'train' || selection === 'name' || selection === 'ticker') {
                 var val = stock.metrics[metric];
                 if (!isNaN(val)) {
                     var quartiles = quartilesByMetric.find(function(el) {
@@ -124,6 +124,10 @@ angular.module('GoldPulse').service('ColoringService', [function() {
                     else {
                         return 'green';
                     }
+                    
+                }
+                else{
+                    return null;
                 }
 
             }

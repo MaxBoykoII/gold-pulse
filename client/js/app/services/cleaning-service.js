@@ -11,12 +11,11 @@ angular.module('GoldPulse')
             //[1] Bring in raw data and start building clean data using the m0 data
             var rawData = res.data.body.dates,
                 cleanData = rawData[0].oids.map(function(el) {
-                    var au1k = handleVal(el.au1k),
+                    var au_oz = handleVal(el.au_oz),
                         price = handleVal(el.close),
-                        auV = (!isNaN(au1k) && !isNaN(price)) ? au1k / (1000 * price) : "no data",
-                        aueq = handleVal(el.aueq),
-                        mcap = handleVal(el.mcap),
-                        per_aueq = handleVal(el.per_aueq),
+                        shares = handleVal(el.shares),
+                        auV = (!isNaN(au_oz) && !isNaN(price)) ? au_oz / (Math.pow(10, 6) * shares * price) : "no data",
+                        mcap = (!isNaN(shares) && !isNaN(price)) ? shares * price : "no data",
                         grd = handleVal(el.grd),
                         id = el.id,
                         name = el.name,
@@ -30,9 +29,8 @@ angular.module('GoldPulse')
                         ticker: ticker,
                         "metrics": {
                             auV: auV,
-                            aueq: aueq,
+                            au_oz: au_oz,
                             mcap: mcap,
-                            per_aueq: per_aueq,
                             grd: grd,
                             price: price
                         }

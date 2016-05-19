@@ -4,7 +4,7 @@ var http = require('http'),
   app = express(),
   server = http.createServer(app),
   request = require('request'),
-  baseUrl = 'https://www.goldminerpulse.com/_demo/dvex-api.php?',
+  baseUrl = 'https://www.goldminerpulse.com/_demo/dvex-api-v01.php?',
   datesUrl = 'https://www.goldminerpulse.com/_demo/valid-dates-api.php';
 
 app.use(express.static(path.resolve(__dirname, 'client')));

@@ -4,6 +4,13 @@ angular.module('GoldPulse')
         $scope.limit = 25;
         $scope.selection = 'auV';
         $scope.mode = 'test';
+        $scope.tooltips = {
+            'auV': "number of ounces of gold per dollar invested",
+            'au_oz': "sum of  all Proven, Probable, Measured, Indicated and Inferred gold ounces across all company projects",
+            'mcap': 'market cap in millions of dollars',
+            'grd': 'average gold grade, in grams per tonne, across all company projects and all resource classificiations',
+            'price': 'closing price in CAD from TSX/TSXv'
+        };
         $scope.set = function(selection) {
             $scope.selection = selection;
             $scope.mode = ($scope.metrics.indexOf(selection) !== -1) ? 'test' : 'train';
@@ -29,13 +36,20 @@ angular.module('GoldPulse')
         $scope.generate = function(m) {
             QuoteService.fetch(m).then(function(data) {
                 $scope.stocks = data.res;
-                console.log($scope.stocks.find(function(stock) {
-                    return stock.name === "Stroud Resources Ltd.";
-                }));
+                $scope.stocks_length = $scope.stocks.length;
                 $scope.metrics = Object.keys(data.res[0].metrics);
                 $scope.dates = data.res[0].dates.map(function(el) {
                     return el.ymd;
                 });
+                if (!isNaN($scope.selection) && $scope.selection >= $scope.dates.length) {
+                    if (!$scope.dates.length) {
+                        $scope.selection = 'auV';
+
+                    }
+                    else {
+                        $scope.selection = $scope.dates.length - 1;
+                    }
+                }
             });
         };
 

@@ -58,7 +58,9 @@ angular.module('GoldPulse')
                     }
                 }
             }
-
+            cleanData = cleanData.filter(function(stock) {
+                return stock.metrics.price > 0;
+            });
 
             return cleanData;
         };

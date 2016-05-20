@@ -29,21 +29,21 @@
           <ul class="dropdown-menu">
             <li><a href="#" ng-click="limit = 25">25</a></li>
             <li><a href="#" ng-click="limit = 50">50</a></li>
-            <li><a href="#" ng-click="limit = 100">100</a></li>
+            <li><a href="#" ng-click="limit = stocks_length">all</a></li>
           </ul>
         </li>
       </ul>
     </div>
   </div>
-  <section id="tabs" class="row">
-    <div class="col-md-6">
+  <section id="tabs">
+    <div ng-class="dates.length ? 'col-md-6': 'col-md-12'">
       <ul class='nav nav-tabs'>
         <li><a href="#" ng-class="{active: 'name' === selection}" ng-click="set('name')">name</a></li>
         <li><a href="#" ng-class="{active: 'ticker' === selection}" ng-click="set('ticker')">ticker</a></li>
-        <li ng-repeat="metric in metrics" ng-class="{active: metric === selection}"> <a href="#" ng-click="set(metric)">{{metric}}</a> </li>
+        <li ng-repeat="metric in metrics" ng-class="{active: metric === selection}"> <a rel="tooltip" tooltip = "tooltips.auV" ng-click="set(metric)">{{metric}}</a> </li>
       </ul>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" ng-if="dates.length">
       <ul class='nav nav-tabs'>
         <li ng-repeat="date in dates" ng-class="{active: date === selection}"><a href="#" ng-click="set(dates.indexOf(date))">{{date}}</a></li>
       </ul>
@@ -59,7 +59,7 @@
           <td ng-class="{'highlight': 'name' === selection}"> name</td>
           <td ng-class="{'highlight': 'ticker' === selection}"> ticker </td>
           <td ng-repeat="metric in metrics" ng-class="{'highlight': metric === selection}">{{metric}}</td>
-          <td ng-repeat="ymd in dates">{{ymd}}</td>
+          <td ng-repeat="ymd in dates" ng-if="dates.length" ng-class="{'highlight': dates.indexOf(ymd) === selection}">{{ymd}}</td>
         </tr>
       </thread>
       <tbody>
@@ -67,7 +67,7 @@
           <td ng-class="{'highlight': 'name' === selection}"> {{stock.name}}</td>
           <td ng-class="{'highlight': 'ticker' === selection}"> {{stock.ticker}}</td>
           <td ng-repeat="metric in metrics" ng-class="colorByMetric(metric, stock, mode, selection)">{{(stock.metrics[metric]) | format : metric}}</td>
-          <td ng-repeat="ymd in dates" ng-class="colorByDate(dates, ymd, stock, mode, selection)">{{stock.dates| match : ymd}}</td>
+          <td ng-repeat="ymd in dates" ng-if="dates.length" ng-class="colorByDate(dates, ymd, stock, mode, selection)">{{stock.dates| match : ymd}}</td>
         </tr>
       </tbody>
     </table>

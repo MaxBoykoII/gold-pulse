@@ -40,7 +40,7 @@
       <ul class='nav nav-tabs'>
         <li><a href="#" ng-class="{active: 'name' === selection}" ng-click="set('name')">name</a></li>
         <li><a href="#" ng-class="{active: 'ticker' === selection}" ng-click="set('ticker')">ticker</a></li>
-        <li ng-repeat="metric in metrics" ng-class="{active: metric === selection}"> <a rel="tooltip" tooltip = "tooltips.auV" ng-click="set(metric)">{{metric}}</a> </li>
+        <li ng-repeat="metric in metrics" ng-class="{active: metric === selection}"> <a href="#" ng-click="set(metric)" data-toggle="tooltip" title="{{tooltips[metric]}}" data-placement="bottom">{{metric}}</a> </li>
       </ul>
     </div>
     <div class="col-md-6" ng-if="dates.length">
@@ -55,6 +55,14 @@
 
     <table class="table table-bordered table-striped">
       <thread>
+        <caption>
+          <ul class="legend">
+            <li><span class="q1"></span> First Quartile</li>
+            <li><span class="q2"></span> Second Quartile</li>
+            <li><span class="q3"></span> Third Quartile</li>
+            <li><span class="q4"></span> Fourth Quartile </li>
+          </ul>
+        </caption>
         <tr>
           <td ng-class="{'highlight': 'name' === selection}"> name</td>
           <td ng-class="{'highlight': 'ticker' === selection}"> ticker </td>
@@ -101,6 +109,7 @@
 
   <!-- App directives -->
   <script src="/js/app/directives/input.js"></script>
+  <script src="/js/app/directives/tooltip.js"></script>
 
 </body>
 

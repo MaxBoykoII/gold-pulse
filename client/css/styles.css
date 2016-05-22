@@ -79,17 +79,18 @@ button {
 	display: none !important;
 }
 
-caption {
-	margin-left: 20%;
-	margin-right: 20%;
+table caption {
+	width: 100%;
+	text-align: center;
 }
 
 .legend {
 	list-style: none;
+	display: inline-block;
 }
 
 .legend li {
-	float: left;
+	display: inline-block;
 	margin-right: 10px;
 }
 
@@ -115,4 +116,13 @@ caption {
 
 .legend .q4 {
 	background-color: rgb(161, 194, 153);
+}
+
+.table-header {
+	background-color: #FAF3DD !important;
+	
+}
+
+.table-right {
+	text-align: right;
 }

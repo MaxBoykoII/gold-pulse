@@ -20,6 +20,8 @@ angular.module('GoldPulse')
                         id = el.id,
                         name = el.name,
                         ticker = el.ticker;
+                        
+                        au_oz = isNaN(au_oz) ? au_oz : au_oz/Math.pow(10, 6)
 
                     return {
                         id: id,

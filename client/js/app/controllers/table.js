@@ -6,7 +6,7 @@ angular.module('GoldPulse')
         $scope.mode = 'test';
         $scope.tooltips = {
             'auV': "number of ounces of gold per dollar invested",
-            'au_oz': "sum of all proven, probable, measured, indicated and inferred gold ounces across all company projects",
+            'au_oz': "sum (in millions of ounces) of all proven, probable, measured, indicated and inferred gold ounces across all company projects",
             'mcap': 'market cap in millions of dollars',
             'grd': 'average gold grade, in grams per tonne, across all company projects and all resource classificiations',
             'price': 'closing price in CAD from TSX/TSXv'

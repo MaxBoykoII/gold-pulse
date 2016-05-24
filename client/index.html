@@ -10,6 +10,7 @@
 
 <body ng-app="GoldPulse" ng-controller="TableCtrl" class="ng-cloak">
 
+  <a class="topcorner" href="#">Help</a>
 
   <h1 class="text-center">
                 TSX/TSXV Gold/Silver Exp/Dev
@@ -29,7 +30,7 @@
           <ul class="dropdown-menu">
             <li><a href="#" ng-click="limit = 25">25</a></li>
             <li><a href="#" ng-click="limit = 50">50</a></li>
-            <li><a href="#" ng-click="limit = stocks_length">all</a></li>
+            <li><a href="#" ng-click="limit = stocks_length">all {{stocks_length}}</a></li>
           </ul>
         </li>
       </ul>
@@ -80,6 +81,9 @@
     </table>
   </div>
 
+  <!-- Warnings for Unsupported Broswers -->
+  <script src="/js/warnings/ios5.js">
+  </script>
   <!-- Pollyfills for older broswers -->
   <script src="/js/pollyfills/bind.js"></script>
   <script src="/js/pollyfills/find.js"></script>
@@ -91,24 +95,24 @@
 
 
   <!-- App  Modules -->
-  <script src="/js/app/app.js"></script>
+  <script src="./js/app/app.js"></script>
 
   <!-- App Filters -->
-  <script src="/js/app/filters/match.js"></script>
-  <script src="/js/app/filters/format.js"></script>
+  <script src="./js/app/filters/match.js"></script>
+  <script src="./js/app/filters/format.js"></script>
 
   <!-- App services -->
-  <script src="/js/app/services/cleaning-service.js"></script>
-  <script src="/js/app/services/quote-service.js"></script>
-  <script src="/js/app/services/coloring-service.js"></script>
+  <script src="./js/app/services/cleaning-service.js"></script>
+  <script src="./js/app/services/quote-service.js"></script>
+  <script src="./js/app/services/coloring-service.js"></script>
 
   <!-- App controllers -->
-  <script src="/js/app/controllers/table.js"></script>
-  <script src="/js/app/controllers/date.js"></script>
+  <script src="./js/app/controllers/table.js"></script>
+  <script src="./js/app/controllers/date.js"></script>
 
   <!-- App directives -->
-  <script src="/js/app/directives/input.js"></script>
-  <script src="/js/app/directives/tooltip.js"></script>
+  <script src="./js/app/directives/input.js"></script>
+  <script src="./js/app/directives/tooltip.js"></script>
 
 </body>
 

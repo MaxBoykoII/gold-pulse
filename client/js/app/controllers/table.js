@@ -41,6 +41,9 @@ angular.module('GoldPulse')
                 $scope.dates = data.res[0].dates.map(function(el) {
                     return el.ymd;
                 });
+                if ($scope.limit !== 25 && $scope.limit !== 50) {
+                    $scope.limit = $scope.stocks_length;
+                }
                 if (!isNaN($scope.selection) && $scope.selection >= $scope.dates.length) {
                     if (!$scope.dates.length) {
                         $scope.selection = 'auV';

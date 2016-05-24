@@ -6,6 +6,9 @@ angular.module("GoldPulse")
                 if (metric === 'price') {
                     return $filter('currency')(val);
                 }
+                else if (metric === 'auV') {
+                    return $filter('number')(val, 3);
+                }
                 else {
                     return $filter('number')(val, 2);
                 }

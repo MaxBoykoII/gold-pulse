@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../development/js/warnings/ios5.js"],"names":[],"mappings":";;AAAC,IAAI,UAAU,SAAV,CAAoB,KAApB,CAA0B,2BAA1B,CAAJ,EAA4D;AACxD,UAAM,4CAAN;AACH","file":"ios5.js","sourcesContent":[" if (navigator.userAgent.match(/OS 5(_\\d)+ like Mac OS X/i)) {\n     alert(\"Sorry, but this app does not support iOS5!\");\n }"]}

@@ -1,10 +1,12 @@
-angular.module('GoldPulse')
-    .filter('match', function() {
-        return function(dates, ymd) {
-            return dates.filter(function(el) {
-                return el.ymd === ymd;
-            }).map(function(el) {
-                return el.change;
-            })[0];
-        };
-    });
+'use strict';
+
+angular.module('GoldPulse').filter('match', function () {
+    return function (dates, ymd) {
+        return dates.filter(function (el) {
+            return el.ymd === ymd;
+        }).map(function (el) {
+            return el.change;
+        })[0];
+    };
+});
+//# sourceMappingURL=match.js.map

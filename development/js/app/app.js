@@ -1,0 +1,1 @@
+angular.module("GoldPulse", ['ngMaterial', 'ngMessages', 'material.svgAssetsCache']);

@@ -12,24 +12,13 @@ body {
 	font-family: Verdana, sans-serif;
 }
 
-section {
-	width: 100%;
-	text-align: center;
-}
+
 
 a {
 	color: rgb(77, 117, 152) !important;
 }
 
-#tabs div {
-	background-color: #FAF3DD;
-}
 
-section ul {
-	text-align: center;
-	position: relative;
-	display: inline-block;
-}
 
 .align {
 	margin-top: 0;

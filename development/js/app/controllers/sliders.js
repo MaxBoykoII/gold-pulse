@@ -1,6 +1,6 @@
 angular.module('GoldPulse')
-.controller('SlidersCtrl', ['$scope', function($scope) {
-  //Set the metrics and initialize weightings and array of fixed metrics, that is, metrics that are checked off
+    .controller('SlidersCtrl', ['$scope', function($scope) {
+        //Set the metrics and initialize weightings and array of fixed metrics, that is, metrics that are checked off
         $scope.metrics = ['auV', 'au_oz', 'mcap', 'grd', 'price'];
         $scope.weightings = {
             'auV': 100,
@@ -9,12 +9,6 @@ angular.module('GoldPulse')
             'grd': 0,
             'price': 0,
         };
-        $scope.fixed = [];
-        //Initialze range for sliders. By default, no metrics are fixed, so the full range is allowed.
-
-        $scope.rangeMax = 100;
-        $scope.rangeMin = -100;
-
         //Make weightings iterable (so that they can be summed over more easily)
         $scope.weightings[Symbol.iterator] = function*() {
             let properties = $scope.metrics;
@@ -22,7 +16,12 @@ angular.module('GoldPulse')
                 yield this[p];
             }
 
-        };
+        }
+        $scope.fixed = [];
+
+        $scope.rangeMax = 100;
+        $scope.rangeMin = -100;
+
 
         $scope.toggleFix = function(metric) {
             const index = $scope.fixed.indexOf(metric);
@@ -41,18 +40,18 @@ angular.module('GoldPulse')
                 }
             }
         };
-
         $scope.sum = function() {
-                let sum = 0;
+            let sum = 0;
 
-                for (let weight of $scope.weightings) {
-                    sum += Math.abs(weight);
-                }
+            for (let weight of $scope.weightings) {
+                sum += Math.abs(weight);
+            }
 
-                return sum;
-            };
-            //Establish watch expression for fixed metrics
-            //If some metrics are fixed, the ranges for the others must be shortened
+            return sum;
+        };
+
+        //Establish watch expression for fixed metrics
+        //If some metrics are fixed, the ranges for the others must be shortened
         $scope.$watchCollection('fixed', (newVal) => {
             let sumFixed = 0;
             for (let metric of $scope.fixed) {
@@ -65,6 +64,9 @@ angular.module('GoldPulse')
         //Establish watch expression for weightings
         //to ensure absolute sum of weightings is 100.
         $scope.$watchCollection('weightings', (newVal, oldVal) => {
+             $scope.mode = 'test';
+            $scope.selection = false;
+            
             //Is the absolute sum of the weightings 100?
             let sum = $scope.sum();
             // If not, adjust weightings of unchanged metrics.
@@ -125,4 +127,4 @@ angular.module('GoldPulse')
             }
         });
 
-}]);
+    }]);

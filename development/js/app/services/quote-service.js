@@ -1,5 +1,5 @@
 angular.module("GoldPulse")
-    .service('QuoteService', ['$http', '$q', 'CleaningService', 'ColoringService', function($http, $q, CleaningService, ColoringService) {
+    .service('QuoteService', ['$http', '$q', 'CleaningService', 'QuantileService','ColoringService', function($http, $q, CleaningService, QuantileService, ColoringService) {
 
         this.fetch = function(m) {
             var deferred = $q.defer(),
@@ -8,6 +8,7 @@ angular.module("GoldPulse")
 
             $http.get(requestUrl).then(function(res) {
                 res = CleaningService.clean(res);
+                QuantileService.setDataByMetric(res);
                 ColoringService.setQuartilesByDate(res);
                 ColoringService.setQuartilesByMetric(res);
                 

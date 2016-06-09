@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("GoldPulse").service('QuoteService', ['$http', '$q', 'CleaningService', 'ColoringService', function ($http, $q, CleaningService, ColoringService) {
+angular.module("GoldPulse").service('QuoteService', ['$http', '$q', 'CleaningService', 'QuantileService', 'ColoringService', function ($http, $q, CleaningService, QuantileService, ColoringService) {
 
     this.fetch = function (m) {
         var deferred = $q.defer(),
@@ -9,6 +9,7 @@ angular.module("GoldPulse").service('QuoteService', ['$http', '$q', 'CleaningSer
 
         $http.get(requestUrl).then(function (res) {
             res = CleaningService.clean(res);
+            QuantileService.setDataByMetric(res);
             ColoringService.setQuartilesByDate(res);
             ColoringService.setQuartilesByMetric(res);
 

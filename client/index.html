@@ -53,17 +53,17 @@
       </caption>
       <thread>
         <tr class="table-header">
-          <td ng-class="{'highlight': 'name' === selection}"> <a href="#" ng-class="{active: 'name' === selection}" ng-click="set('name')">name</a></td>
-          <td ng-class="{'highlight': 'ticker' === selection}"> <a href="#" ng-class="{active: 'ticker' === selection}" ng-click="set('ticker')">ticker</a> </td>
-          <td ng-repeat="metric in metrics" ng-class="{'highlight': metric === selection}" class="table-right"><a href="#" ng-click="set(metric)" data-toggle="tooltip" title="{{tooltips[metric]}}" data-placement="bottom">{{metric}}</a></td>
-          <td ng-repeat="ymd in dates" ng-if="dates.length" ng-class="{'highlight': dates.indexOf(ymd) === selection}" class="table-right"><a href="#" ng-click="set(dates.indexOf(ymd))">{{ymd}}</a></td>
+          <td ng-class="{'highlight': 'name' === selection}"> <a href="" ng-class="{active: 'name' === selection}" ng-click="set('name')">name</a></td>
+          <td ng-class="{'highlight': 'ticker' === selection}"> <a href="" ng-class="{active: 'ticker' === selection}" ng-click="set('ticker')">ticker</a> </td>
+          <td ng-repeat="metric in metrics" ng-class="{'highlight': (weightings[metric] === 100 || weightings[metric] === -100) && (mode === 'test')}" class="table-right"><a href="" ng-click="set(metric)" data-toggle="tooltip" title="{{tooltips[metric]}}" data-placement="bottom">{{metric}}</a></td>
+          <td ng-repeat="ymd in dates" ng-if="dates.length" ng-class="{'highlight': dates.indexOf(ymd) === selection}" class="table-right"><a href="" ng-click="set(dates.indexOf(ymd))">{{ymd}}</a></td>
         </tr>
       </thread>
       <tbody>
         <tr ng-repeat="stock in stocks | orderBy: sort | limitTo: limit">
           <td ng-class="{'highlight': 'name' === selection}"> {{stock.name}}</td>
           <td ng-class="{'highlight': 'ticker' === selection}"> {{stock.ticker}}</td>
-          <td ng-repeat="metric in metrics" ng-class="colorByMetric(metric, stock, mode, selection)" class="table-right">{{(stock.metrics[metric]) | format : metric}}</td>
+          <td ng-repeat="metric in metrics" ng-class="colorByMetric(metric, stock, mode, selection, weightings)" class="table-right">{{(stock.metrics[metric]) | format : metric}}</td>
           <td ng-repeat="ymd in dates" ng-if="dates.length" ng-class="colorByDate(dates, ymd, stock, mode, selection)" class="table-right">{{stock.dates| match : ymd}}</td>
         </tr>
       </tbody>
@@ -98,8 +98,10 @@
 
   <!-- App services -->
   <script src="./js/app/services/cleaning-service.js"></script>
+  <script src="./js/app/services/quantile-service.js"></script>
   <script src="./js/app/services/quote-service.js"></script>
   <script src="./js/app/services/coloring-service.js"></script>
+  
 
   <!-- App controllers -->
   <script src="./js/app/controllers/table.js"></script>

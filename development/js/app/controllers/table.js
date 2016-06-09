@@ -1,5 +1,5 @@
 angular.module('GoldPulse')
-    .controller('TableCtrl', ['$scope', 'QuoteService', 'ColoringService', function($scope, QuoteService, ColoringService) {
+    .controller('TableCtrl', ['$scope', 'QuoteService', 'ColoringService', 'QuantileService', function($scope, QuoteService, ColoringService, QuantileService) {
 
         $scope.limit = 25;
         $scope.selection = 'auV';
@@ -13,23 +13,44 @@ angular.module('GoldPulse')
         };
         $scope.set = function(selection) {
             $scope.selection = selection;
-            $scope.mode = ($scope.metrics.indexOf(selection) !== -1) ? 'test' : 'train';
+            const isMetric = $scope.metrics.find(metric => metric === selection);
+            console.log(isMetric);
+            if (isMetric) {
+                $scope.mode == 'test';
+                for (let metric of $scope.metrics) {
+                    if (metric === isMetric) {
+                        $scope.weightings[metric] = 100;
+
+                    }
+                    else {
+                        $scope.weightings[metric] = 0;
+                    }
+                }
+                console.log($scope.weightings);
+            }
+            else {
+                $scope.mode = 'train';
+            }
         };
         $scope.sort = function(stock) {
             var selection = $scope.selection;
-            if ($scope.metrics.indexOf(selection) !== -1) {
-                return stock.metrics[selection] * -1;
-            }
-            else if (selection === 'name') {
+            if (selection === 'name') {
                 return stock.name;
             }
             else if (selection === 'ticker') {
                 return stock.ticker;
             }
-            else {
+            else if ($scope.mode === 'train') {
                 return parseFloat(stock.dates.find(function(el) {
                     return el.ymd === $scope.dates[selection];
                 }).change) * -1;
+            }
+            else {
+                let weightedSum = 0;
+                for (let metric of $scope.metrics) {
+                    weightedSum += -1 * QuantileService.quantileByMetric(stock, metric) * $scope.weightings[metric];
+                }
+                return weightedSum;
             }
         };
 

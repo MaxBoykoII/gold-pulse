@@ -58,7 +58,7 @@ angular.module('GoldPulse').service('ColoringService', [function() {
                 }
                 if (data.length) {
                     data.sort(function(a, b) {
-                        return a - b
+                        return a - b;
                     });
                     for (var i = 0.25; i < 1; i += 0.25) {
                         obj.quartiles.push(d3.quantile(data, i));
@@ -102,8 +102,8 @@ angular.module('GoldPulse').service('ColoringService', [function() {
 
             }
         };
-        this.colorByMetric = function(metric, stock, mode, selection) {
-            if (selection === metric) {
+        this.colorByMetric = function(metric, stock, mode, selection, weightings) {
+            if ((weightings[metric] === 100 || weightings[metric] === -100) && (mode === 'test')) {
                 return 'highlight';
             }
             else if (mode === 'train' || selection === 'name' || selection === 'ticker') {

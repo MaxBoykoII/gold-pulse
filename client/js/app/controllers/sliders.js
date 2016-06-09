@@ -12,12 +12,6 @@ angular.module('GoldPulse').controller('SlidersCtrl', ['$scope', function ($scop
         'grd': 0,
         'price': 0
     };
-    $scope.fixed = [];
-    //Initialze range for sliders. By default, no metrics are fixed, so the full range is allowed.
-
-    $scope.rangeMax = 100;
-    $scope.rangeMin = -100;
-
     //Make weightings iterable (so that they can be summed over more easily)
     $scope.weightings[Symbol.iterator] = regeneratorRuntime.mark(function _callee() {
         var properties, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, p;
@@ -89,6 +83,10 @@ angular.module('GoldPulse').controller('SlidersCtrl', ['$scope', function ($scop
             }
         }, _callee, this, [[4, 15, 19, 27], [20,, 22, 26]]);
     });
+    $scope.fixed = [];
+
+    $scope.rangeMax = 100;
+    $scope.rangeMin = -100;
 
     $scope.toggleFix = function (metric) {
         var index = $scope.fixed.indexOf(metric);
@@ -112,7 +110,6 @@ angular.module('GoldPulse').controller('SlidersCtrl', ['$scope', function ($scop
             }
         }
     };
-
     $scope.sum = function () {
         var sum = 0;
 
@@ -143,6 +140,7 @@ angular.module('GoldPulse').controller('SlidersCtrl', ['$scope', function ($scop
 
         return sum;
     };
+
     //Establish watch expression for fixed metrics
     //If some metrics are fixed, the ranges for the others must be shortened
     $scope.$watchCollection('fixed', function (newVal) {
@@ -179,6 +177,9 @@ angular.module('GoldPulse').controller('SlidersCtrl', ['$scope', function ($scop
     //Establish watch expression for weightings
     //to ensure absolute sum of weightings is 100.
     $scope.$watchCollection('weightings', function (newVal, oldVal) {
+        $scope.mode = 'test';
+        $scope.selection = false;
+
         //Is the absolute sum of the weightings 100?
         var sum = $scope.sum();
         // If not, adjust weightings of unchanged metrics.

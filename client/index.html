@@ -38,34 +38,7 @@
       </ul>
     </div>
   </div>
-  <div class="table-responsive well">
-    <table class="table table-bordered table-striped">
-      <caption>
-        <ul class="legend">
-          <li><span class="q1"></span> Quartile 1</li>
-          <li><span class="q2"></span> Quartile 2</li>
-          <li><span class="q3"></span> Quartile 3</li>
-          <li><span class="q4"></span> Quartile 4</li>
-        </ul>
-      </caption>
-      <thread>
-        <tr class="table-header">
-          <td ng-class="{'highlight': 'name' === selection}"> <a href="" ng-class="{active: 'name' === selection}" ng-click="set('name')">name</a></td>
-          <td ng-class="{'highlight': 'ticker' === selection}"> <a href="" ng-class="{active: 'ticker' === selection}" ng-click="set('ticker')">ticker</a> </td>
-          <td ng-repeat="metric in metrics" ng-class="{'highlight': selection === metric}" class="table-right"><a href="" ng-click="set(metric)" data-toggle="tooltip" title="{{tooltips[metric]}}" data-placement="bottom">{{metric}}</a></td>
-          <td ng-repeat="ymd in dates" ng-if="dates.length" ng-class="{'highlight': dates.indexOf(ymd) === selection}" class="table-right"><a href="" ng-click="set(dates.indexOf(ymd))">{{ymd}}</a></td>
-        </tr>
-      </thread>
-      <tbody>
-        <tr ng-repeat="stock in stocks | orderBy: sort | limitTo: limit">
-          <td ng-class="{'highlight': 'name' === selection}"> {{stock.name}}</td>
-          <td ng-class="{'highlight': 'ticker' === selection}"> {{stock.ticker}}</td>
-          <td ng-repeat="metric in metrics" ng-class="colorByMetric(metric, stock, mode, selection)" class="table-right">{{(stock.metrics[metric]) | format : metric}}</td>
-          <td ng-repeat="ymd in dates" ng-if="dates.length" ng-class="colorByDate(dates, ymd, stock, mode, selection)" class="table-right">{{stock.dates| match : ymd}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+ <div id="view" ng-view></div>
 
   <!-- Warnings for Unsupported Broswers -->
   <script src="/js/warnings/ios5.js">

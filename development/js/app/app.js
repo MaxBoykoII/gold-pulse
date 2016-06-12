@@ -1,1 +1,1 @@
-angular.module("GoldPulse", ['ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
+angular.module("GoldPulse", ['ngRoute','ngMaterial', 'ngMessages', 'material.svgAssetsCache']);

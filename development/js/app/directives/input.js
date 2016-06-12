@@ -2,7 +2,7 @@ angular.module('GoldPulse')
     .directive('dateInput', function() {
         return {
             restrict: 'E',
-            templateUrl: './templates/dateInput.html',
+            templateUrl: './templates/directives/dateInput.html',
             controller: 'DateCtrl',
             link: function(scope, element) {
                 scope.$watch('dateStr', function(newVal) {

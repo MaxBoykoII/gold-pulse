@@ -3,7 +3,7 @@ angular.module('GoldPulse')
         return {
             scope: {},
             restrict: "E",
-            templateUrl: "./templates/sliders.html",
+            templateUrl: "./templates/directives/sliders.html",
             controller: 'SlidersCtrl'
         };
     })

@@ -14,26 +14,10 @@ angular.module('GoldPulse')
         $scope.set = function(selection) {
             $scope.selection = selection;
             const isMetric = $scope.metrics.find(metric => metric === selection);
-            console.log(isMetric);
-            if (isMetric) {
-                $scope.mode == 'test';
-                for (let metric of $scope.metrics) {
-                    if (metric === isMetric) {
-                        $scope.weightings[metric] = 100;
-
-                    }
-                    else {
-                        $scope.weightings[metric] = 0;
-                    }
-                }
-                console.log($scope.weightings);
-            }
-            else {
-                $scope.mode = 'train';
-            }
+            $scope.mode = isMetric ? 'test': 'train';
         };
         $scope.sort = function(stock) {
-            var selection = $scope.selection;
+            let selection = $scope.selection;
             if (selection === 'name') {
                 return stock.name;
             }
@@ -45,13 +29,10 @@ angular.module('GoldPulse')
                     return el.ymd === $scope.dates[selection];
                 }).change) * -1;
             }
-            else {
-                let weightedSum = 0;
-                for (let metric of $scope.metrics) {
-                    weightedSum += -1 * QuantileService.quantileByMetric(stock, metric) * $scope.weightings[metric];
-                }
-                return weightedSum;
+            else if ($scope.mode === 'test'){
+                return -1*stock.metrics[selection];
             }
+                       
         };
 
         $scope.generate = function(m) {

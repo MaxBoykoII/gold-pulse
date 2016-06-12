@@ -1,9 +1,11 @@
 <div ng-repeat="metric in metrics" layout="" class="container">
-    <div flex="10" layout="" layout-align="center center">
-      <span class="md-body-1">{{metric}} <input ng-attr-id="{{metric + '-box'}}" type="checkbox" ng-click="toggleFix(metric)"></span>
-    </div>
-    <md-slider flex="" ng-model="weightings[metric]" ng-attr-min='{{(fixed.indexOf(metric) !== -1)? -100 : rangeMin}}' ng-attr-max='{{(fixed.indexOf(metric) !== -1)? 100 : rangeMax}}' aria-label="{{metric}}" ng-attr-id="{{metric + '-slider'}}" class="" ng-disabled="fixed.indexOf(metric) !== -1 || disableAll"></md-slider>
-    <div flex="20" layout="" layout-align="center center">
-      {{weightings[metric] + "%"}}
-    </div>
+  <div flex="10" layout="" layout-align="center center">
+    <span class="md-body-1">{{metric}} <input ng-attr-id="{{metric + '-box'}}" type="checkbox" ng-click="toggleFix(metric)"></span>
   </div>
+  <md-slider flex="" ng-model="weightings[metric]" ng-attr-min='{{(fixed.indexOf(metric) !== -1)? -100 : rangeMin}}' ng-attr-max='{{(fixed.indexOf(metric) !== -1)? 100 : rangeMax}}' aria-label="{{metric}}" ng-attr-id="{{metric + '-slider'}}" class="" ng-disabled="fixed.indexOf(metric) !== -1 || disableAll">
+
+  </md-slider>
+  <div flex="20" layout="" layout-align="center center">
+    {{weightings[metric] + "%"}}
+  </div>
+</div>

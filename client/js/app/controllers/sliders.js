@@ -177,9 +177,6 @@ angular.module('GoldPulse').controller('SlidersCtrl', ['$scope', function ($scop
     //Establish watch expression for weightings
     //to ensure absolute sum of weightings is 100.
     $scope.$watchCollection('weightings', function (newVal, oldVal) {
-        $scope.mode = 'test';
-        $scope.selection = false;
-
         //Is the absolute sum of the weightings 100?
         var sum = $scope.sum();
         // If not, adjust weightings of unchanged metrics.

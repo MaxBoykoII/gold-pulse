@@ -102,8 +102,8 @@ angular.module('GoldPulse').service('ColoringService', [function() {
 
             }
         };
-        this.colorByMetric = function(metric, stock, mode, selection, weightings) {
-            if ((weightings[metric] === 100 || weightings[metric] === -100) && (mode === 'test')) {
+        this.colorByMetric = function(metric, stock, mode, selection) {
+            if (selection === metric) {
                 return 'highlight';
             }
             else if (mode === 'train' || selection === 'name' || selection === 'ticker') {
